@@ -26,7 +26,7 @@ namespace Logistics
             services.AddControllersWithViews();
             services.AddDbContext<AuthorizationContext>(options => options.UseSqlServer(connection));
 
- 
+            services.AddDbContext<Logistics.DBContext.LogisticsContext>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
