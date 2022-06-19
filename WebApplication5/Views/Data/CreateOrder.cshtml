@@ -1,0 +1,43 @@
+﻿@model Logistics.Models.Data.Order
+
+@{
+    ViewBag.Title = "Создание Заказа";
+}
+
+<form asp-action="CreateOrderPost" asp-controller="Data">
+    
+    <div class="form-group">
+        <label asp-for="SenderId" class="control-label">Отправитель</label>
+        <select asp-for="SenderId" asp-items="ViewBag.Senders"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RecipientId" class="control-label">Получатель</label>
+        <select asp-for="RecipientId" asp-items="ViewBag.Recipients"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CityFromId" class="control-label">Город откуда</label>
+        <select asp-for="CityFromId" asp-items="ViewBag.CitiesFrom"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CityToId" class="control-label">Город куда</label>
+        <select asp-for="CityToId" asp-items="ViewBag.CitiesTo"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductId" class="control-label">Тип товара</label>
+        <select asp-for="ProductId" asp-items="ViewBag.Products"></select>
+    </div>
+
+     <div class="form-group">
+        <label asp-for="Quantity" class="control-label">Количество(кг)</label>
+        <input type="number" asp-for="Quantity" />
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+</form>

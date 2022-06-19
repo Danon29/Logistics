@@ -1,8 +1,11 @@
 ﻿using Logistics.DBContext;
 using Logistics.Models.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Logistics.Controllers
 {
@@ -10,8 +13,11 @@ namespace Logistics.Controllers
     {
         private LogisticsContext db;
 
-        public List<Sender> _id = new List<Sender>();
- 
+        public int _idSender;
+        public int _idRecipient;
+        public DateTime now;
+        public Price _price;
+
         public DataController(LogisticsContext context)
         {
             db = context;
@@ -29,25 +35,67 @@ namespace Logistics.Controllers
         }
 
         [HttpPost] 
-        public IActionResult AddOrderSenderPost(Sender model) 
+        public async Task<IActionResult> AddOrderSenderPost(Sender model) 
         {
             db.Senders.Add(model);
-            db.SaveChanges();
-            _id[0] = db.Senders.FirstOrDefault(x => (x.Name == model.Name) && (x.Surname == model.Surname));
-            return RedirectToAction("AddOrderRecipientGet");
+            
+            await db.SaveChangesAsync();
+
+            _idSender = model.SenderId;
+
+            return RedirectToAction("AddOrderRecipientGet", new { _idSender });
         }
 
         [HttpGet]
         public IActionResult AddOrderRecipientGet()
         {
+            Console.WriteLine(_idSender);
             return View();
         }
         [HttpPost]
-        public IActionResult AddOrderRecipient(Recipient model)
+        public async Task<IActionResult> AddOrderRecipient(Recipient model)
         {
             db.Recipients.Add(model);
+
+            await db.SaveChangesAsync();
+
+            _idRecipient = model.RecipientId;
+            now = DateTime.Now;
+            return RedirectToAction("CreateOrder", new {_idSender,_idRecipient, now});
+        }
+
+        public IActionResult CreateOrder() 
+        {
+            SelectList CitiesFrom = new SelectList(db.CitiesFroms, "CityFromId", "Name");
+            SelectList CitiesTo = new SelectList(db.CitiesTos, "CitieToId", "Name");
+            SelectList Products = new SelectList(db.Prices, "ProductId", "Name");
+            SelectList Senders = new SelectList(db.Senders, "SenderId", "Surname");
+            SelectList Recipients = new SelectList(db.Recipients, "RecipientId", "Surname");
+            ViewBag.CitiesFrom = CitiesFrom;
+            ViewBag.CitiesTo = CitiesTo;
+            ViewBag.Products = Products;
+            ViewBag.Senders = Senders;
+            ViewBag.Recipients = Recipients;
+            return View();
+        }
+
+        public ViewResult checkkek(int kek)
+        {
+            ViewBag.Kek = "Лул";
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrderPost(Order model)
+        {
+            _price = db.Prices.FirstOrDefault(x => x.ProductId == model.ProductId);
+
+            model.TotalCost = model.Quantity * _price.CostPerKg;
+
+            model.Date = DateTime.Now;
+           
+            db.Add(model);
             db.SaveChanges();
-            _id[1] = db.Senders.FirstOrDefault(x => (x.Name == model.Name) && (x.Surname == model.Surname));
             return RedirectToAction("Index");
         }
     }
