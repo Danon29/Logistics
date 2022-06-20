@@ -1,0 +1,33 @@
+﻿@model Logistics.Models.Data.FlightOrder
+
+@{
+    ViewBag.Title = "Добавление связи";
+}
+
+<form asp-controller="DataAdmin" asp-action="CreateOrderFlightPost">
+
+    <div class="form-group">
+        <label asp-for="ContractNumber" class="control-label">Номер контракта</label>
+        <select asp-for="ContractNumber" asp-items="ViewBag.Orders"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FlightId" class="control-label">Номер рейса</label>
+        <select asp-for="FlightId" asp-items="ViewBag.Flights"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BeginDate" class="control-label">Начало</label>
+        <input type="date" asp-for="BeginDate">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndDate" class="control-label">Конец</label>
+        <input type="date" asp-for="EndDate">
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+</form>

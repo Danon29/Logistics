@@ -76,13 +76,9 @@ namespace Logistics.Controllers
             }
             return View(model);
         }
-        [Authorize(Roles = "admin")]
-        public IActionResult AdminPage()
-        {
-            string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value; 
-            return Content($"ваша роль: {role}");
-        }
 
+
+        
 
         private async Task Authenticate(User user)
         {

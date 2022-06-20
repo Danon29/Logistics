@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@ViewBag.Message</h1>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="DataAdmin" asp-action="CreateFlight" >Создать рейс</a>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="DataAdmin" asp-action="CreateOrderFlight" >Добавить заказ в рейс</a>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="DataAdmin" asp-action="CreateFlightCity" >Добавить в расписание</a>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Заказы</a>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index2">Рейсы и Заказы</a>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="TimeTable">Расписание</a>

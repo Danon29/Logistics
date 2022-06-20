@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Logistics.Models.Data.FlightCity>
+
+@{
+    ViewBag.Title = "Раписание";
+}
+
+<table class="table">
+    <tr><td>FlightId</td><td>CityId</td><td>Врмя прибытия</td></tr>
+    @foreach(var item in Model)
+    {
+        <tr><td>@item.FlightId</td><td>@item.CityId</td><td>@item.ArrivalDate</td></tr>
+    }
+</table>

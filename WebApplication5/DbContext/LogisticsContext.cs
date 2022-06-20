@@ -34,6 +34,7 @@ namespace Logistics.DBContext
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=DESKTOP-D2H8SGN;Database=Logistics;Trusted_Connection=True;");
             }
         }
@@ -110,13 +111,11 @@ namespace Logistics.DBContext
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.Flights)
                     .HasForeignKey(d => d.CarId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Flights_Cars");
 
                 entity.HasOne(d => d.Driver)
                     .WithMany(p => p.Flights)
                     .HasForeignKey(d => d.DriverId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Flights_Drivers");
             });
 
@@ -133,13 +132,11 @@ namespace Logistics.DBContext
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.FlightCities)
                     .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FlightCity_CitiesTo");
 
                 entity.HasOne(d => d.Flight)
                     .WithMany(p => p.FlightCities)
                     .HasForeignKey(d => d.FlightId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FlightCity_Flights");
             });
 
@@ -158,13 +155,12 @@ namespace Logistics.DBContext
                 entity.HasOne(d => d.ContractNumberNavigation)
                     .WithMany(p => p.FlightOrders)
                     .HasForeignKey(d => d.ContractNumber)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_FlightOrder_Orders");
 
                 entity.HasOne(d => d.Flight)
                     .WithMany(p => p.FlightOrders)
                     .HasForeignKey(d => d.FlightId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FlightOrder_Flights");
             });
 
@@ -177,31 +173,26 @@ namespace Logistics.DBContext
                 entity.HasOne(d => d.CityFrom)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CityFromId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_CitiesFrom");
 
                 entity.HasOne(d => d.CityTo)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CityToId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_CitiesTo");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_Prices");
 
                 entity.HasOne(d => d.Recipient)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.RecipientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_Recipients");
 
                 entity.HasOne(d => d.Sender)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.SenderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_Senders");
             });
 

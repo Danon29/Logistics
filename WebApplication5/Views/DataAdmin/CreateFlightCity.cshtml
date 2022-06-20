@@ -1,0 +1,28 @@
+﻿@model Logistics.Models.Data.FlightCity
+
+@{
+    ViewBag.Title = "Добавление расписания";
+}
+
+<form asp-controller="DataAdmin" asp-action="CreateFlightCityPost">
+
+    <div class="form-group">
+        <label asp-for="FlightId" class="control-label">Рейс</label>
+        <select asp-for="FlightId" asp-items="ViewBag.Flights"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CityId" class="control-label">Город</label>
+        <select asp-for="CityId" asp-items="ViewBag.City"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ArrivalDate" class="control-label">Дата прибытия</label>
+        <input type="date" asp-for="ArrivalDate">
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+</form>

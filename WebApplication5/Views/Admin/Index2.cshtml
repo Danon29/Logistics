@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Logistics.Models.Data.FlightOrder>
+
+
+<table class="table">
+    <tr><td>id</td><td>FlightId</td><td>Contract</td></tr>
+    @foreach(var item in Model)
+    {
+        <tr><td>@item.FirstId</td><td>@item.FlightId</td><td>@item.ContractNumber</td>
+            <td>
+                 <a asp-action="DeleteIndex2" asp-controller="Admin" asp-route-id="@item.FirstId">Удалить</a>
+            </td>
+        </tr>
+    }
+
+</table>

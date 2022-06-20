@@ -6,5 +6,9 @@
 
 
 <table class="table">
-    <tr><td>Contract number</td><td>id Отправителя</td><td>id получателя</td><td></td></tr>
+    <tr><td>Contract number</td><td>id Отправителя</td><td>id получателя</td><td>Откуда</td><td>Куда</td><td>Дата заключения контракта</td><td>Id Продукта</td><td>Общая цена</td>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.ContractNumber</td><td>@item.SenderId</td><td>@item.RecipientId</td><td>@item.CityFromId</td><td>@item.CityToId</td><td>@item.Date</td><td>@item.ProductId</td><td>@item.TotalCost</td></tr>
+    }
 </table>

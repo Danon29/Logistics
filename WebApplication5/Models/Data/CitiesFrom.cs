@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 #nullable disable
+
 namespace Logistics.Models.Data
 {
     public partial class CitiesFrom

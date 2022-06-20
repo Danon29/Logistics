@@ -1,7 +1,9 @@
 ﻿using Logistics.DBContext;
 using Logistics.Models.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Logistics.Controllers
 {
+    [Authorize(Roles = "admin, user")]
     public class DataController : Controller
     {
         private LogisticsContext db;
@@ -23,17 +26,20 @@ namespace Logistics.Controllers
             db = context;
         }
 
-        public IActionResult Index()
+        
+        public async Task<IActionResult> Index()
         {
-            return View(db.Orders.ToList());
+            return View(await db.Orders.ToListAsync());
         }
 
+        
         [HttpGet]
         public IActionResult AddOrderSender() 
         {
             return View();
         }
 
+        
         [HttpPost] 
         public async Task<IActionResult> AddOrderSenderPost(Sender model) 
         {
@@ -46,12 +52,15 @@ namespace Logistics.Controllers
             return RedirectToAction("AddOrderRecipientGet", new { _idSender });
         }
 
+        
         [HttpGet]
         public IActionResult AddOrderRecipientGet()
         {
             Console.WriteLine(_idSender);
             return View();
         }
+
+        
         [HttpPost]
         public async Task<IActionResult> AddOrderRecipient(Recipient model)
         {
@@ -64,6 +73,7 @@ namespace Logistics.Controllers
             return RedirectToAction("CreateOrder", new {_idSender,_idRecipient, now});
         }
 
+        
         public IActionResult CreateOrder() 
         {
             SelectList CitiesFrom = new SelectList(db.CitiesFroms, "CityFromId", "Name");
@@ -79,12 +89,8 @@ namespace Logistics.Controllers
             return View();
         }
 
-        public ViewResult checkkek(int kek)
-        {
-            ViewBag.Kek = "Лул";
-            return View();
-        }
 
+        
         [HttpPost]
         public IActionResult CreateOrderPost(Order model)
         {
@@ -97,6 +103,11 @@ namespace Logistics.Controllers
             db.Add(model);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult TimeTable()
+        {
+            return View(db.FlightCities.ToList());
         }
     }
 }

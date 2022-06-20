@@ -1,0 +1,43 @@
+﻿@model Logistics.Models.Data.Flight
+
+@{
+    ViewBag.Title = "Создание рейса";
+}
+
+
+ 
+
+    <form asp-action="CreateFlightPost" asp-controller="DataAdmin">
+
+        <div class="form-group">
+            <label asp-for="DriverId" class="control-label">Водитель</label>
+            <select asp-for="DriverId" asp-items="ViewBag.Drivers"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CarId" class="control-label">Машина</label>
+            <select asp-for="CarId" asp-items="ViewBag.Cars"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BeginDate" class="control-label">Начало Рейса</label>
+            <input type="date" asp-for="BeginDate">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndDate" class="control-label">Конец рейса</label>
+            <input type="date" asp-for="EndDate">
+            @Html.ValidationMessageFor(model => model.EndDate)
+        </div>
+
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+
+    </form> 
+
+
+
+
+
+    

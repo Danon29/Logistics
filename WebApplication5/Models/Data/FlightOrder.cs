@@ -7,8 +7,8 @@ namespace Logistics.Models.Data
 {
     public partial class FlightOrder
     {
-        public int FlightId { get; set; }
-        public int ContractNumber { get; set; }
+        public int? FlightId { get; set; }
+        public int? ContractNumber { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
         public int FirstId { get; set; }
